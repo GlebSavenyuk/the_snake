@@ -81,12 +81,7 @@ class Snake(GameObject):
     def __init__(self):
         super().__init__()
         """Задаем начальные параметры змейки."""
-        self.length = 1
-        self.positions = [self.position]
-        self.direction = RIGHT
-        self.next_direction = None
-        self.body_color = SNAKE_COLOR
-        self.last = None
+        self.reset()
 
     def update_direction(self):
         """Обновляем напрвление змейки, на основе ввода пользовотеля."""
@@ -140,6 +135,7 @@ class Snake(GameObject):
         self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         self.direction = RIGHT
         self.next_direction = None
+        self.body_color = SNAKE_COLOR
         self.last = None
 
 
