@@ -40,44 +40,44 @@ clock = pygame.time.Clock()
 
 
 class GameObject:
-    '''Базовый класс для всех игровых объектов.'''
+    """Базовый класс для всех игровых объектов."""
 
     def __init__(self) -> None:
-        '''Инициализирует игровой объект с позицией по цетру окна.'''
+        """Инициализирует игровой объект с позицией по цетру окна."""
         self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
         self.body_color = None
 
     def draw(self):
-        '''Абстрактный метод для отрисовки объекта.'''
+        """Абстрактный метод для отрисовки объекта."""
         pass
 
 
 class Apple(GameObject):
-    '''Класс, представляющий яблоко в игре.'''
+    """Класс, представляющий яблоко в игре."""
 
     def __init__(self):
-        '''Инициализирует яблоко в случайном метсте.'''
+        """Инициализирует яблоко в случайном метсте."""
         super().__init__()
         self.body_color = APPLE_COLOR
         self.position = self.randomize_position()
 
     def draw(self):
-        '''Отрисовка яблока.'''
+        """Отрисовка яблока."""
         rect = pygame.Rect(self.position, (GRID_SIZE, GRID_SIZE))
         pygame.draw.rect(screen, self.body_color, rect)
         pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
 
     def randomize_position(self):
-        '''Возврощает рандомные координаты яблока.'''
+        """Возврощает рандомные координаты яблока."""
         return (randint(0, GRID_WIDTH) * GRID_SIZE, randint(0, GRID_HEIGHT) * GRID_SIZE)
 
 
 class Snake(GameObject):
-    '''Класс, представляющий змейку в игре.'''
+    """Класс, представляющий змейку в игре."""
 
     def __init__(self):
         super().__init__()
-        '''Задаем начальные параметры змейки.'''
+        """Задаем начальные параметры змейки."""
         self.length = 1
         self.positions = [self.position]
         self.direction = RIGHT
@@ -86,18 +86,18 @@ class Snake(GameObject):
         self.last = None
 
     def update_direction(self):
-        '''Обновляем напрвление змейки, на основе ввода пользовотеля.'''
+        """Обновляем напрвление змейки, на основе ввода пользовотеля."""
         if self.next_direction:
             self.direction = self.next_direction
             self.next_direction = None
 
     def move(self):
-        '''
+        """
         Перемещает змейку в текущем направлении.
 
         Добавляет новую голову и при необходимости удаляет хвост.
         Обесперчивает телепортацию, при выходе за границу карты.
-        '''
+        """
         head_x, head_y = self.get_head_position()
         dx, dy = self.direction
         new_x = (head_x + dx * GRID_SIZE) % SCREEN_WIDTH
@@ -111,7 +111,7 @@ class Snake(GameObject):
             self.last = None
 
     def draw(self):
-        '''Отрисовывает змейку.'''
+        """Отрисовывает змейку."""
         for position in self.positions[:-1]:
             rect = (pygame.Rect(position, (GRID_SIZE, GRID_SIZE)))
             pygame.draw.rect(screen, self.body_color, rect)
@@ -128,11 +128,11 @@ class Snake(GameObject):
             pygame.draw.rect(screen, BOARD_BACKGROUND_COLOR, last_rect)
 
     def get_head_position(self):
-        '''Возвращает координаты головы.'''
+        """Возвращает координаты головы."""
         return self.positions[0]
 
     def reset(self):
-        '''Сбрасывыет параметры змейки в начальное состояние.'''
+        """Сбрасывыет параметры змейки в начальное состояние."""
         self.length = 1
         self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         self.direction = RIGHT
@@ -141,7 +141,7 @@ class Snake(GameObject):
 
 
 def handle_keys(game_object):
-    '''Обрабатывает нажатия клавиш от пользователя.'''
+    """Обрабатывает нажатия клавиш от пользователя."""
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -158,7 +158,7 @@ def handle_keys(game_object):
 
 
 def main():
-    '''Основная функция игры, содержащая главные игровой цикл.'''
+    """Основная функция игры, содержащая главные игровой цикл."""
     pygame.init()
     apple = Apple()
     snake = Snake()
