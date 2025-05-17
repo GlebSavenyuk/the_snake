@@ -69,7 +69,10 @@ class Apple(GameObject):
 
     def randomize_position(self):
         """Возврощает рандомные координаты яблока."""
-        return (randint(0, GRID_WIDTH) * GRID_SIZE, randint(0, GRID_HEIGHT) * GRID_SIZE)
+        return (
+            randint(0, GRID_WIDTH) * GRID_SIZE,
+            randint(0, GRID_HEIGHT) * GRID_SIZE
+        )
 
 
 class Snake(GameObject):
