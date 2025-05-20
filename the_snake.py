@@ -52,16 +52,17 @@ class GameObject:
 
     def draw(self) -> None:
         """Абстрактный метод для отрисовки объекта."""
-        pass
+        raise NotImplementedError(
+            'Метод draw() должен быть реализован в дочернем классе')
 
 
 class Apple(GameObject):
     """Класс, представляющий яблоко в игре."""
 
-    def __init__(self, body_color=APPLE_COLOR) -> None:
+    def __init__(self, body_color=APPLE_COLOR, taking_position: list[Pointer] = None) -> None:
         """Инициализирует яблоко в случайном метсте."""
         super().__init__(body_color=body_color)
-        self.position = self.randomize_position()
+        self.position: Pointer = self.randomize_position(taking_position or [])
 
     def draw(self) -> None:
         """Отрисовка яблока."""
@@ -69,12 +70,15 @@ class Apple(GameObject):
         pg.draw.rect(screen, self.body_color, rect)
         pg.draw.rect(screen, BORDER_COLOR, rect, 1)
 
-    def randomize_position(self) -> Pointer:
+    def randomize_position(self, taking_position: list[Pointer]) -> Pointer:
         """Возврощает рандомные координаты яблока."""
-        return (
-            randint(0, GRID_WIDTH) * GRID_SIZE,
-            randint(0, GRID_HEIGHT) * GRID_SIZE
-        )
+        while True:
+            position = (
+                randint(0, GRID_WIDTH - 1) * GRID_SIZE,
+                randint(0, GRID_HEIGHT - 1) * GRID_SIZE
+            )
+            if position not in taking_position:
+                return position
 
 
 class Snake(GameObject):
@@ -178,7 +182,7 @@ def main() -> None:
         # Проверка на съедания яблока
         if snake.get_head_position() == apple.position:
             snake.length += 1
-            apple.position = apple.randomize_position()
+            apple.position = apple.randomize_position(snake.positions)
         # Проверка столкновения с самим собой
         if snake.get_head_position() in snake.positions[1:]:
             snake.reset()
