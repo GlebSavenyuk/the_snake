@@ -59,7 +59,11 @@ class GameObject:
 class Apple(GameObject):
     """Класс, представляющий яблоко в игре."""
 
-    def __init__(self, body_color=APPLE_COLOR, taking_position: list[Pointer] = None) -> None:
+    def __init__(
+        self,
+        body_color=APPLE_COLOR,
+        taking_position: list[Pointer] = None
+    ) -> None:
         """Инициализирует яблоко в случайном метсте."""
         super().__init__(body_color=body_color)
         self.position: Pointer = self.randomize_position(taking_position or [])
