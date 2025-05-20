@@ -109,10 +109,8 @@ class Snake(GameObject):
 
         self.positions.insert(0, (new_x, new_y))
 
-        if len(self.positions) > self.length:
-            self.last = self.positions.pop()
-        else:
-            self.last = None
+        self.last = (self.positions.pop() if len(
+            self.positions) > self.length else None)
 
     def draw(self) -> None:
         """Отрисовывает змейку."""
@@ -122,7 +120,7 @@ class Snake(GameObject):
             pg.draw.rect(screen, BORDER_COLOR, rect, 1)
 
         # Отрисовка головы змейки
-        head_rect = pg.Rect(self.positions[0], (GRID_SIZE, GRID_SIZE))
+        head_rect = pg.Rect(self.get_head_position(), (GRID_SIZE, GRID_SIZE))
         pg.draw.rect(screen, self.body_color, head_rect)
         pg.draw.rect(screen, BORDER_COLOR, head_rect, 1)
 
