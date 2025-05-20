@@ -45,10 +45,10 @@ clock = pg.time.Clock()
 class GameObject:
     """Базовый класс для всех игровых объектов."""
 
-    def __init__(self) -> None:
+    def __init__(self, body_color: Color | None = None) -> None:
         """Инициализирует игровой объект с позицией по цетру окна."""
         self.position = ((SCREEN_WIDTH // 2), (SCREEN_HEIGHT // 2))
-        self.body_color: Color | None = None
+        self.body_color = body_color
 
     def draw(self) -> None:
         """Абстрактный метод для отрисовки объекта."""
@@ -58,10 +58,9 @@ class GameObject:
 class Apple(GameObject):
     """Класс, представляющий яблоко в игре."""
 
-    def __init__(self) -> None:
+    def __init__(self, body_color=APPLE_COLOR) -> None:
         """Инициализирует яблоко в случайном метсте."""
-        super().__init__()
-        self.body_color = APPLE_COLOR
+        super().__init__(body_color=body_color)
         self.position = self.randomize_position()
 
     def draw(self) -> None:
@@ -81,8 +80,8 @@ class Apple(GameObject):
 class Snake(GameObject):
     """Класс, представляющий змейку в игре."""
 
-    def __init__(self) -> None:
-        super().__init__()
+    def __init__(self, body_color: Color = SNAKE_COLOR) -> None:
+        super().__init__(body_color=body_color)
         """Задаем начальные параметры змейки."""
         self.reset()
 
